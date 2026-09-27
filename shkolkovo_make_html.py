@@ -246,11 +246,11 @@ tasksData.questions.forEach((task, idx) => {
   searchText += (task.tags || []).join(' ') + ' ';
   searchText += (task.sources || []).join(' ') + ' ';
   
+  const parser = new DOMParser();
   const extractText = (html) => {
     if (!html) return '';
-    const div = document.createElement('div');
-    div.innerHTML = html;
-    return div.textContent || '';
+    const doc = parser.parseFromString(html, 'text/html');
+    return doc.body.textContent || '';
   };
   
   searchText += extractText(task.question_html) + ' ';
@@ -279,7 +279,7 @@ function rewriteImages(html, images) {
     if (!url) return match;
     return 'src=' + quote + PLACEHOLDER + quote +
            ' data-src=' + quote + url + quote +
-           ' referrerpolicy="no-referrer"';
+           ' referrerpolicy="no-referrer" loading="lazy"';
   });
 }
 
