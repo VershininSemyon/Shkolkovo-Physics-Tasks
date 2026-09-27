@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задания ЕГЭ — Физика</title>
+<style>
+  :root {
+    --accent: #4f6ef7;
+    --accent-dark: #3a55d9;
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --border: #e3e7f0;
+    --text: #1f2430;
+    --muted: #6b7280;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(20,30,60,.06);
+    padding: 14px 20px;
+  }
+
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin: 0 0 12px;
+  }
+
+  h1 .sub {
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .controls input[type="search"] {
+    flex: 1;
+    min-width: 220px;
+    padding: 9px 14px;
+    font-size: 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    background: #fafbfe;
+    transition: border-color .15s, box-shadow .15s;
+  }
+
+  .controls input[type="search"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(79,110,247,.15);
+  }
+
+  .btn {
+    padding: 9px 14px;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--text);
+    text-decoration: none;
+    transition: background .15s, transform .1s;
+  }
+
+  .btn:hover {
+    background: #eef1f9;
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+  }
+
+  .count {
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  main {
+    max-width: 960px;
+    margin: 20px auto 80px;
+    padding: 0 20px;
+  }
+
+  .intro {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 1px 3px rgba(20,30,60,.04);
+  }
+
+  .intro-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .intro-text {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .task-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .task-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 15px 16px;
+    color: var(--text);
+    text-decoration: none;
+    box-shadow: 0 1px 3px rgba(20,30,60,.04);
+    transition: border-color .15s, box-shadow .15s, transform .15s;
+  }
+
+  .task-card:hover {
+    border-color: #cbd4f7;
+    box-shadow: 0 5px 16px rgba(20,30,60,.08);
+    transform: translateY(-1px);
+  }
+
+  .badge {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .task-info {
+    min-width: 0;
+  }
+
+  .task-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .task-description {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .task-arrow {
+    margin-left: auto;
+    color: var(--muted);
+    font-size: 20px;
+    transition: color .15s, transform .15s;
+  }
+
+  .task-card:hover .task-arrow {
+    color: var(--accent);
+    transform: translateX(2px);
+  }
+
+  .all-card {
+    margin-bottom: 14px;
+  }
+
+  .all-card .badge {
+    background: #eef1f9;
+    color: var(--accent-dark);
+  }
+
+  #noResults {
+    display: none;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  #noResults .big {
+    font-size: 42px;
+    margin-bottom: 8px;
+  }
+
+  #noResults .msg {
+    font-size: 17px;
+  }
+
+  @media (max-width: 650px) {
+    .task-grid {
+      grid-template-columns: 1fr;
+    }
+
+    header {
+      padding: 12px 14px;
+    }
+
+    main {
+      padding: 0 14px;
+    }
+
+    .controls input[type="search"] {
+      min-width: 100%;
+      order: -1;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>Задания ЕГЭ <span class="sub">· Физика · 1–26</span></h1>
+
+    <div class="controls">
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Поиск по номеру задания…"
+        autocomplete="off"
+        inputmode="numeric"
+      >
+      <button class="btn btn-primary" id="searchBtn">Поиск</button>
+      <button class="btn" id="resetBtn">Сброс</button>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="intro">
+    <div class="intro-title">Банк заданий ЕГЭ по физике</div>
+    <div class="intro-text">
+      Выберите номер задания, чтобы открыть соответствующую страницу.
+      На каждой странице находятся собранные задания и решения.
+    </div>
+  </div>
+
+  <a class="task-card all-card" href="tasks_all.html">
+    <div class="badge">∞</div>
+    <div class="task-info">
+      <div class="task-title">Все задания</div>
+      <div class="task-description">Единая страница со всеми заданиями ЕГЭ по физике</div>
+    </div>
+    <div class="task-arrow">›</div>
+  </a>
+
+  <div class="task-grid" id="taskGrid"></div>
+
+  <div id="noResults">
+    <div class="big"></div>
+    <div class="msg">Задание с таким номером не найдено</div>
+  </div>
+</main>
+
+<script>
+  const taskGrid = document.getElementById("taskGrid");
+  const searchInput = document.getElementById("searchInput");
+  const searchBtn = document.getElementById("searchBtn");
+  const resetBtn = document.getElementById("resetBtn");
+  const count = document.getElementById("count");
+  const noResults = document.getElementById("noResults");
+
+  const tasks = Array.from({ length: 26 }, (_, index) => index + 1);
+
+  function renderTasks(filter = "") {
+    const query = filter.trim();
+
+    const filteredTasks = tasks.filter(number =>
+      String(number).includes(query)
+    );
+
+    taskGrid.innerHTML = filteredTasks.map(number => `
+      <a class="task-card" href="tasks_${number}.html">
+        <div class="badge">${number}</div>
+        <div class="task-info">
+          <div class="task-title">Задание №${number}</div>
+          <div class="task-description">Открыть задания и решения</div>
+        </div>
+        <div class="task-arrow">›</div>
+      </a>
+    `).join("");
+
+    count.textContent = `Показано: ${filteredTasks.length} из ${tasks.length}`;
+    noResults.style.display = filteredTasks.length ? "none" : "block";
+  }
+
+  function search() {
+    renderTasks(searchInput.value);
+  }
+
+  function reset() {
+    searchInput.value = "";
+    renderTasks();
+    searchInput.focus();
+  }
+
+  searchBtn.addEventListener("click", search);
+  resetBtn.addEventListener("click", reset);
+
+  searchInput.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      search();
+    }
+  });
+
+  searchInput.addEventListener("input", () => {
+    renderTasks(searchInput.value);
+  });
+
+  renderTasks();
+</script>
+
+</body>
+</html>
